@@ -1,0 +1,64 @@
+.drop-menu-setup {
+    transform: none !important;
+    width: 450px;
+    overflow-x: scroll
+}
+input[type="file"] {
+    display: none;
+}
+
+.project-name-menu {
+    font-size: 25px;
+    text-align: center;
+    margin: 5px 0;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    color: white;
+}
+
+.loading-sam {
+    opacity: 0.3;
+}
+.spinner {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+    color: white;
+}
+
+.loading {
+    display: block;
+    padding: 5px 0;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    margin: 1rem;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+li a {
+    display: block;
+    text-align: center;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin: 2px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #5fa4ed;
+    color: white;
+}
+
+.nahrajImageSam:hover {
+    background-color: #5fa4ed;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #5fa4ed;
+    color: white;
+}
