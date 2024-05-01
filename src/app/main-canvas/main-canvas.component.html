@@ -1,0 +1,71 @@
+<app-toolbar></app-toolbar>
+<app-mymodal></app-mymodal>
+<div class="container drawing-wrapper">
+    <div class="row mt-1">
+        <div class="col-2" style="padding-right: 0">
+            <div class="project-name-menu">
+                {{this.projectName}}
+            </div>
+            <ul class="sam-menu">
+                <li><a [ngClass]="{'active': activeMode==3}" (click)="defaultModeOn()"><i class="fa fa-mouse-pointer" aria-hidden="true"></i></a></li>
+                <li><a [ngClass]="{'active': activeMode==0, 'loading-sam': this.processingImage || this.allMasksFlag}"  disabled (click)="clickModeOn()">Maska na klik</a></li>
+                <li><a [ngClass]="{'active': activeMode==1, 'loading-sam': this.processingImage}" (click)="getAllMasks()">Všetky masky</a></li>
+                <li><a [ngClass]="{'active': activeMode==2, 'loading-sam': this.processingImage || this.allMasksFlag}" (click)="boundingBoxModeOn()">Bounding box maska</a></li>
+            </ul>
+            <div *ngIf="processingImage" class="spinner">
+                <div class="spinner-border" role="status"></div>
+                <span class="loading">Načítavam zero-shot detektor</span>
+            </div>
+            <div *ngIf="allMasksFlag" class="spinner">
+                <div class="spinner-border" role="status"></div>
+                <span class="loading">Hľadajú sa všetky masky</span>
+            </div>
+            <ul class="list-group t-images">
+                <div *ngIf="projectImageData.length > 0; else NOIMAGES">
+                    <div *ngFor="let image of projectImageData">
+                        <li class="list-group-item" [ngClass]="{'active': image.name == selectedImage}"
+                            (click)="changeImage(image)">{{image.name}}
+                            <i (click)="deleteSelectedImage(image.name)" class="fa fa-close dlt-btn"></i>
+                        </li>
+                    </div>
+                </div>
+                <ng-template #NOIMAGES>
+                    <span style="text-align: center; font-size: medium; padding: 5px 0"><i class="fa fa-image" aria-hidden="true"></i> Zoznam nahratých obrázkov</span>
+                </ng-template>
+            </ul>
+        </div>
+        <div class="col-8 zoom-wrapper">
+            <img id="image" (load)="changeFromGoogle()" style="display: none">
+            <pan-zoom [config]="panzoomConfig">
+                <div *ngIf="closedPolygon">
+                    <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false"
+                         display="dynamic" placement="top-left">
+                        <button class="btn btn-outline-light" id="dropdownBasic3" ngbDropdownToggle
+                                [ngStyle]="{'width': '150px', 'margin-top': my + 'px' , 'margin-left': mx+'px',
+                                'z-index': '1', 'border-color': 'white', 'position': 'fixed', 'background-color': 'blue'}">
+                            Vyber kategóriu
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="drop-menu-setup bg-dark"
+                             [ngStyle]="{'margin-top': my + 'px' , 'margin-left': mx+'px'}">
+                            <button *ngFor="let color of environment.project[this.projectIndex].colors index as i" class="btn btn-dark ml-2" type="button"
+                                    [ngStyle]="{'border-color': color.color, 'background-color': color.color}"
+                                    (click)="setColor(i); myDrop.close()"
+                            >{{color.name}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-style: solid; border-color: ghostwhite" class="artboard"
+                     (mouseup)="mouseUp($event)"
+                     (mousemove)="mouseMove($event)"
+                     (click)="clickOnImage($event)"
+                     #artboard>
+                </div>
+            </pan-zoom>
+        </div>
+        <div style="padding-left: 0" class="col-2">
+            <app-layers
+              [dropdownOn] = false
+            ></app-layers>
+    </div>
+    </div>
+</div>

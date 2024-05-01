@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SAM anotator</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://use.fontawesome.com/d719df19b8.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+</head>
+
+<body>
+
+  <app-root></app-root>
+
+  <script type="text/javascript">
+    const SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
+    const CLIENT_ID = '794844163304-26kqnnmvqhqut72pfptm6lahb1b940bi.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyDQLFpF7WtUN_Dx173TtE0fEAzd0btxCPw';
+    const APP_ID = '794844163304';
+
+    let imagesMap;
+
+    let tokenClient;
+    let accessToken = null;
+    let pickerInited = false;
+    let gisInited = false;
+
+
+    document.getElementById('authorize_button').style.visibility = 'hidden';
+    document.getElementById('signout_button').style.visibility = 'hidden';
+
+    /**
+     * Callback after api.js is loaded.
+     */
+    function gapiLoaded() {
+      gapi.load('client:picker', initializePicker);
+    }
+
+    /**
+     * Callback after the API client is loaded. Loads the
+     * discovery doc to initialize the API.
+     */
+    async function initializePicker() {
+      await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/drive/v3/rest');
+      pickerInited = true;
+      maybeEnableButtons();
+    }
+
+    /**
+     * Callback after Google Identity Services are loaded.
+     */
+    function gisLoaded() {
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: '',
+      });
+      gisInited = true;
+      maybeEnableButtons();
+    }
+
+    /**
+     * Enables user interaction after all libraries are loaded.
+     */
+    function maybeEnableButtons() {
+      if (pickerInited && gisInited) {
+        document.getElementById('authorize_button').style.visibility = 'visible';
+      }
+    }
+
+    /**
+     *  Sign in the user upon button click.
+     */
+    function handleAuthClick() {
+      tokenClient.callback = async (response) => {
+        if (response.error !== undefined) {
+          throw (response);
+        }
+        accessToken = response.access_token;
+        document.getElementById('signout_button').style.visibility = 'visible';
+        /*document.getElementById('authorize_button').innerText = 'Refresh';*/
+        await createPicker();
+      };
+
+      if (accessToken === null) {
+        // Prompt the user to select a Google Account and ask for consent to share their data
+        // when establishing a new session.
+        tokenClient.requestAccessToken({prompt: 'consent'});
+      } else {
+        // Skip display of account chooser and consent dialog for an existing session.
+        tokenClient.requestAccessToken({prompt: ''});
+      }
+    }
+
+    /**
+     *  Sign out the user upon button click.
+     */
+    function handleSignoutClick() {
+      if (accessToken) {
+        accessToken = null;
+        google.accounts.oauth2.revoke(accessToken);
+        document.getElementById('content').innerText = '';
+        document.getElementById('authorize_button').innerText = 'Authorize';
+        document.getElementById('signout_button').style.display = 'none';
+      }
+    }
+
+    /**
+     *  Create and render a Picker object for searching images.
+     */
+    function createPicker() {
+      const view = new google.picker.View(google.picker.ViewId.DOCS);
+      view.setMimeTypes('image/png,image/jpeg,image/jpg,application/vnd.google-apps.folder');
+      const picker = new google.picker.PickerBuilder()
+              .enableFeature(google.picker.Feature.NAV_HIDDEN)
+              .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+              .setDeveloperKey(API_KEY)
+              .setAppId(APP_ID)
+              .setOAuthToken(accessToken)
+              .addView(view)
+              .addView(new google.picker.DocsUploadView())
+              .setCallback(pickerCallback)
+              .build();
+      picker.setVisible(true);
+    }
+
+
+    function pickerCallback(data) {
+      let images = new Map();
+      let firstOne;
+      const document = data[google.picker.Response.DOCUMENTS];
+      let text = `Picker response: \n${JSON.stringify(data, null, 2)}\n`;
+      for (let i = 0; i < document.length; i++) {
+        const id = document[i][google.picker.Document.ID];
+        const res = gapi.client.drive.files.get({
+          'fileId': id,
+          'fields': '*',
+        });
+        text += `Drive API response for first document: \n${JSON.stringify(res.result, null, 2)}\n`;
+        var xhr = new XMLHttpRequest();
+        var url = "https://www.googleapis.com/drive/v3/files/" + id + "?alt=media";
+        xhr.open('GET', url);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        xhr.responseType = "blob";
+        xhr.addEventListener('load', function(e) {
+          var blob = this.response;
+          const myFile = new File([blob], 'image.jpeg', {
+            type: blob.type,
+          });
+          var reader = new FileReader();
+          reader.readAsDataURL(myFile);
+          reader.onload = function () {
+            if (i===0){
+              firstOne = reader.result;
+            }
+            images.set(document[i].name, reader.result);
+            if (document.length===images.size){
+              window.document.getElementById("image").src = firstOne;
+              imagesMap = images;
+            }
+          };
+        });
+        xhr.send();
+      }
+    }
+
+    function getImagesMap() {
+      return imagesMap;
+    }
+
+  </script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+</body>
+</html>

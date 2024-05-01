@@ -1,0 +1,156 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+
+body {
+    font-family: "Arial", sans-serif;
+}
+
+.modal-backdrop {
+    background-color: #0000 !important;
+    opacity: 0.5;
+}
+
+.modal-body {
+    font-size: 20px;
+}
+
+.modal-dialog {
+    margin: 4rem auto;
+}
+
+.modal-content {
+    background-color: #fce6e6;
+    border: 1px solid red;
+}
+
+.modal-footer {
+    text-align: center;
+    padding: 3px;
+    border-top: 1px solid black;
+}
+
+svg{
+    background-size: auto auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+
+.btn-navbar {
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    border-radius: 3px;
+}
+
+.h2-navbar {
+    margin: 5px;
+}
+
+.hideCircles .dragCircle {
+    display: none;
+}
+.menu-bar {
+    width: 170px;
+    padding: 4% 0;
+    position: absolute;
+}
+
+.layer-btn {
+    overflow: hidden;
+    width: 85px;
+    padding: 3px;
+}
+
+.drawing-wrapper {
+    max-width: unset;
+    width: 100%;
+    padding-top: 15px;
+    background-color:#6b6b6b;
+}
+
+.zoom-wrapper {
+    height: 100vw;
+}
+
+.navbar-style {
+    background-color: #5fa4ed;
+}
+
+ul {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.dlt-btn {
+    right: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.list-group-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.75rem 1.25rem 0.75rem 0.5rem;
+}
+
+.list-group-item.active {
+    background-color: #5fa4ed;
+}
+
+.sam-menu {
+    list-style-type: none;
+    padding: 3px;
+    font-size: 18px;
+    border-radius: 2%;
+}
+
+.t-images {
+    border-radius: 4px;
+    padding: 3px;
+    font-size: small;
+}
+
+.title-image {
+    color: white;
+    cursor: pointer;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.artboard{
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+.artboardSam{
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+html{
+    overflow: hidden;
+    background-color:#6b6b6b;
+}
+
+th { display: table-cell; direction: ltr;}
+
+
+.form-control{
+    background:#5a5a5a;
+    color:#fff;
+    border-color: #5a5a5a;
+}
+
+.form-control:focus{
+    background:#5a5a5a;
+    color:#fff;
+    border-color: #5a5a5a;
+}
+
+.input-group-text{
+    background:#212529;
+    color:#fff;
+    border-color: #212529;
+}
+

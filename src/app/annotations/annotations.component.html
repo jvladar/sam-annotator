@@ -1,0 +1,155 @@
+<div [ngClass]="{'ml-2 mr-2 dp-mh': dropdownOn}" class="ml-2 mr-2" style="overflow-x: scroll; max-height: 85vh">
+    <div *ngIf="dropdownOn" style="max-width: 100%">
+        <div class="d-flex justify-content-around mb-2">
+            <div class="input-group d-flex" style="width: 185px">
+                <div class="input-group-prepend" style="height: 40px">
+                    <span class="input-group-text" id="basic-addon1">Priesvitnosť</span>
+                </div>
+                <input type="number" style="height: 40px" class="form-control" min="0" max="100" value='60' (input)="updateOpacity()" #opacity
+                       aria-describedby="basic-addon1">
+            </div>
+            <div ngbDropdown display="dynamic" placement="bottom" class="d-flex">
+                <button class="btn btn-outline-light layer-menu-btn" id="import" ngbDropdownToggle>Import</button>
+                <div ngbDropdownMenu aria-labelledby="import" class="bg-dark">
+                    <div class="dropdown-export">
+                        <label for="formFileYolo" class="form-label" style="padding: 4px 24px; margin-bottom: 0;">YOLOv8</label>
+                        <input class="form-control form-control-sm" style="display: none; padding: 0.25rem 0.1rem; line-height: 1" id="formFileYolo" type="file" (change)="handleFileUpload($event)">
+                    </div>
+                    <div class="dropdown-export">
+                        <label for="formFileCoco" class="form-label" style="padding: 4px 24px; margin-bottom: 0;">Coco</label>
+                        <input class="form-control form-control-sm" style="display: none; padding: 0.25rem 0.1rem; line-height: 1" id="formFileCoco" type="file"
+                               [(ngModel)]="value" (change)="fromCoco($event)">
+                    </div>
+                </div>
+            </div>
+
+            <div ngbDropdown display="dynamic" placement="bottom" class="d-flex">
+                <button class="btn btn-outline-light layer-menu-btn" id="export-yolo" ngbDropdownToggle>
+                    Export Yolo
+                </button>
+                <div ngbDropdownMenu aria-labelledby="export-yolo" class="bg-dark">
+                    <div class="dropdown-export">
+                        <a class="dropdown-item" style="padding: 4px 24px; margin-bottom: 0;" (click)="toYolo()">Aktuálny obrázok</a>
+                    </div>
+                    <div class="dropdown-export">
+                        <a class="dropdown-item" style="padding: 4px 24px; margin-bottom: 0;" (click)="toYoloZip()">Všetky obrázky</a>
+                    </div>
+                </div>
+            </div>
+
+            <div ngbDropdown display="dynamic" placement="bottom" class="d-flex">
+                <button class="btn btn-outline-light layer-menu-btn" id="export-coco" ngbDropdownToggle>
+                    Export Coco
+                </button>
+                <div ngbDropdownMenu aria-labelledby="export-coco" class="bg-dark">
+                    <div class="dropdown-export">
+                        <a class="dropdown-item" (click)="toCoco()">Aktuálny obrázok</a>
+                    </div>
+                    <div class="dropdown-export">
+                        <a class="dropdown-item" (click)="toCocoZip()">Všetky obrázky</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="bottom-right" class="d-flex">
+                <button class="btn btn-outline-light layer-menu-btn" id="dropdownBasic31" ngbDropdownToggle>
+                    Skupina
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic31" style="overflow:auto; min-height:290px; max-height: 600px;" class="bg-dark">
+                    <div class="d-flex" *ngFor="let color of colors index as i" style="width: 290px;">
+                        <button class="btn btn-dark ml-2" type="button"
+                                [ngStyle]="{'width': '140px','margin-bottom': '5px', 'border-color': color.color, 'background-color': color.color, 'text-decoration': this.maskSvc.currentColor.color === color.color ? 'underline' : 'none'}"
+                        >{{color.name}}</button>
+
+                        <i (click)="toggleAllColor(i)" class="fa fa-eye" aria-hidden="true"
+                           [ngStyle]="{'font-size': 'large', 'color': 'yellow', 'margin': 'auto', 'text-align': 'center'}"></i>
+                        <i class="fa fa-close" (click)="deleteAllColor(i)" aria-hidden="true" [ngStyle]="{'font-size': 'large', 'color': 'yellow', 'margin': 'auto', 'text-align': 'center'}"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="layers">
+        <table *ngIf="dropdownOn; else PANELMENU" class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Vrstva</th>
+                    <th scope="col">Trieda</th>
+                    <th scope="col">Dopredu</th>
+                    <th scope="col">Dozadu</th>
+                    <th scope="col">Skryť&nbsp;/ zobraziť</th>
+                    <th scope="col">Vymazať</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let layer of layers">
+                    <th>{{layer.index}}</th>
+                    <th>
+                        <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="top-left">
+                            <button class="btn btn-outline-light" id="dropdownBasic3" ngbDropdownToggle
+                              [ngStyle]="{'width': '150px', 'border-color': getLayerType(layer.type).color, 'background-color': getLayerType(layer.type).color}"
+                            >{{getLayerType(layer.type).name}}</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic3" style="width: 450px;" class="bg-dark">
+                                <button *ngFor="let color of colors index as i" class="btn btn-dark ml-2" type="button"
+                                 [ngStyle]="{'border-color': color.color, 'background-color': color.color}"
+                                 (click)="setColor(layer, i); myDrop.close()"
+                                >{{color.name}}</button>
+                            </div>
+                        </div>
+                    </th>
+                    <th><i class="fa fa-arrow-up" (click)="toTop(layer.index)" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-arrow-down" (click)="toBottom(layer.index)" aria-hidden="true"></i></th>
+                    <th><i (click)="toggle(layer.index)" *ngIf="layer.visibility" class="fa fa-eye"
+                            aria-hidden="true"></i><i (click)="toggle(layer.index)" *ngIf="!layer.visibility"
+                            class="fa fa-eye-slash" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-close" (click)="delete(layer.index)" aria-hidden="true"></i>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <ng-template #PANELMENU>
+            <table class="table table-striped table-sm table-bordered"
+                   style="color: white">
+                <thead>
+                    <tr>
+                        <th scope="col"><i class="fa fa-clone"></i></th>
+                        <th scope="col"><i class="fa fa-tag"></i></th>
+                        <th scope="col"><i class="fa fa-arrow-up"></i></th>
+                        <th scope="col"><i class="fa fa-arrow-down"></i></th>
+                        <th scope="col"><i class="fa fa-eye"></i></th>
+                        <th scope="col"><i class="fa fa-close"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let layer of layers; let i = index"
+                        [ngClass]="{'selected-layer': layer.index == selectedLayer}">
+                        <th>{{i+1}}</th>
+                        <th>
+                            <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="bottom">
+                                <button class="btn btn-outline-light layer-btn" id="dropdownPanel" ngbDropdownToggle
+                                        [ngStyle]="{'border-color': getLayerType(layer.type).color, 'background-color': getLayerType(layer.type).color}">
+                                    <span style="text-overflow: ellipsis">{{getLayerType(layer.type).name}}</span>
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dpd-layers bg-dark">
+                                    <button *ngFor="let color of colors index as i" class="btn btn-dark btn-color" type="button"
+                                            [ngStyle]="{'border-color': color.color, 'background-color': color.color}"
+                                            (click)="setColor(layer, i); myDrop.close()"
+                                    >{{color.name}}</button>
+                                </div>
+                            </div>
+                        </th>
+                        <th><i class="fa fa-arrow-up" (click)="toTop(layer.index)" aria-hidden="true"></i></th>
+                        <th><i class="fa fa-arrow-down" (click)="toBottom(layer.index)" aria-hidden="true"></i></th>
+                        <th><i (click)="toggle(layer.index)" *ngIf="layer.visibility" class="fa fa-eye"
+                               aria-hidden="true"></i><i (click)="toggle(layer.index)" *ngIf="!layer.visibility"
+                                                         class="fa fa-eye-slash" aria-hidden="true"></i></th>
+                        <th><i class="fa fa-close" (click)="delete(layer.index)" aria-hidden="true"></i></th>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </div>
+    <div class="alert zoznam-vrstiev" *ngIf="!layers"><i class="fa fa-clone"></i> Zoznam vrstiev</div>
+</div>

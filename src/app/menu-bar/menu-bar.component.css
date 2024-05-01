@@ -1,0 +1,20 @@
+.manual-anot {
+    overflow:auto;
+    width: 350px;
+}
+
+.mode-btns {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.active-mode {
+    background-color: #5fa4ed;
+}
+
+.mode-span {
+    color: white;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,43 @@
+<app-toolbar></app-toolbar>
+<div class="menu-bar">
+    <ul class="sam-menu">
+        <li><a [ngClass]="{'active': activeMode==3}" (click)="defaultModeOn()"><i class="fa fa-mouse-pointer" aria-hidden="true"></i></a></li>
+        <li><a [ngClass]="{'active': activeMode==0}" (click)="clickModeOn()">Maska na klik</a></li>
+        <li><a [ngClass]="{'active': activeMode==1}" (click)="getAllMasks()">Všetky masky</a></li>
+        <li><a [ngClass]="{'active': activeMode==2}" (click)="boundingBoxModeOn()">Bounding box maska</a></li>
+    </ul>
+
+    <ul class="list-group t-images">
+        <div *ngIf="imageFileDatas.length > 0; else NOIMAGES">
+            <div *ngFor="let image of imageFileDatas">
+                <li class="list-group-item" [ngClass]="{'active': image.name==selectedImage}"
+                    (click)="changeImageSam(image)">{{image.name}} <i (click)="deleteSelectedImage(image.name)" class="fa fa-close dlt-btn"></i>
+                </li>
+            </div>
+        </div>
+        <ng-template #NOIMAGES>
+            <span style="text-align: center; font-size: medium; padding: 5px 0"><i class="fa fa-image" aria-hidden="true"></i> Zoznam nahratých obrázkov</span>
+        </ng-template>
+
+    </ul>
+</div>
+
+<div class="container-fluid mb-4" style="position: fixed; top: 100px; bottom: 0; left: 200px; right: 50px;">
+    <img id="image" (load)="changeFromGoogle()" style="display: none">
+    <pan-zoom [config]="panzoomConfig">
+        <div *ngIf="processingImage" class="spinner">
+            <div class="spinner-border" role="status"></div>
+            <span class="loading">Loading...</span>
+        </div>
+        <div style="border-style: solid; border-color: ghostwhite" class="artboardSam"
+             (mousemove)="mouseMove($event)"
+             (click)="clickOnImage($event)"
+             (mouseup)="mouseUp($event)"
+             #artboardSam>
+        </div>
+        <!--
+            <img draggable="false" id="imageee" (click)="clickOnImage($event)" (mousedown)="startPos($event)" (mouseup)="endPos($event)" >
+        -->
+    </pan-zoom>
+</div>
+

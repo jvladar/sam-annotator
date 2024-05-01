@@ -1,0 +1,87 @@
+<nav class="navbar navbar-style">
+    <h2 class="h2-navbar">ANOTÁTOR</h2>
+
+    <app-project-manager></app-project-manager>
+
+    <app-toolbar-color-selector></app-toolbar-color-selector>
+
+    <div ngbDropdown display="dynamic" placement="bottom" class="d-inline-block">
+        <button class="btn btn-navbar btn-outline-light" ngbDropdownToggle>Nahrať obrázok</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic3" style="overflow:auto; max-height: 600px;" class="bg-dark">
+            <app-image-selector></app-image-selector>
+        </div>
+    </div>
+
+
+    <div ngbDropdown display="dynamic" placement="bottom" class="d-inline-block">
+        <button class="btn btn-navbar btn-outline-light" ngbDropdownToggle>Ručné anotácie</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="bg-dark manual-anot">
+            <span class="mode-span">Výber modu vytvárania ručných anotácií</span>
+            <div class="mode-btns">
+                <button type="button" class="btn btn-navbar btn-outline-light" [ngClass]="{'active-mode': !rectMode}"
+                        id="polagon" (click)="changePolygonMode()">Polygonálne</button>
+                <button type="button" class="btn btn-navbar btn-outline-light" [ngClass]="{'active-mode': rectMode}"
+                        id="rectangle" (click)="changeRectangleMode()">Obdĺžnikové</button>
+            </div>
+        </div>
+    </div>
+
+    <!--<button type="button" class="btn btn-navbar btn-outline-light" (click)="changeModeSam()">SAM</button>-->
+
+
+    <div ngbDropdown display="dynamic" placement="bottom-right" class="d-inline-block">
+        <button class="btn btn-navbar btn-outline-light" id="dropdownBasic1" ngbDropdownToggle>Anotácie</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="overflow:auto; max-height: 600px; min-height: 300px; width:635px;"
+            class="bg-dark">
+            <app-layers></app-layers>
+        </div>
+    </div>
+
+    <div ngbDropdown display="dynamic" placement="bottom-right" class="d-inline-block">
+        <button class="btn btn-navbar btn-outline-light" id="dropdownBasic4" ngbDropdownToggle>Skratky</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic4"
+            style="overflow:auto; max-height: 400px; color:#eee; width:300px; padding: 10px 10px 10px 10px"
+            class="bg-dark">
+            <h5>Skratky</h5>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Tlačidlo</th>
+                        <th scope="col">Akcia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Skrolovanie</th>
+                        <td>Lupa</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Q</th>
+                        <td>Zmena anotácie štvorec/manuálne</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ľavý klik</th>
+                        <td>Vložiť bod</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Enter</th>
+                        <td>Ukončiť anotáciu</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Backspace</th>
+                        <td>Krok späť</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><i class="fa fa-arrow-up" aria-hidden="true"></i> <i class="fa fa-arrow-down" aria-hidden="true"></i></th>
+                        <td>Zvýšiť/znížiť opacity</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">0</th>
+                        <td>Reset pozície a zoomu obrazu</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</nav>

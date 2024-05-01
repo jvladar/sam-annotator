@@ -1,0 +1,8 @@
+<ng-template #mymodal let-modal>
+    <div class="modal-body">
+        <i class="fa fa-warning" aria-hidden="true"></i> {{alertMessage}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Zavrieť</button>
+    </div>
+</ng-template>

@@ -1,0 +1,51 @@
+<ng-container *ngIf="!googleDriveOn; else GOOGLE_MODAL">
+    <div class="ml-2 mt-1 mb-1 mr-2">
+        <div class="input-group mb-2" style="width:500px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Obrázok</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                       aria-describedby="inputGroupFileAddon01" (change)="showImage($event)" multiple>
+                <label class="custom-file-label" for="inputGroupFile01">Vyber súbor</label>
+            </div>
+        </div>
+        <div class="input-group mb-2" style="width:500px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFolderAdd">Priečinok</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFolder"
+                       aria-describedby="inputGroupFileAddon01" (change)="showImage($event)" webkitdirectory>
+                <label class="custom-file-label" for="inputGroupFile01">Vyber priečinok</label>
+            </div>
+        </div>
+        <div class="input-group mb-2" style="width:500px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Nahrať z Google Drive</span>
+            </div>
+            <div class="btn btn-navbar btn-outline-light ml-1" style="width:130px" id="authorize_button" onclick="handleAuthClick()">Pripojiť</div>
+            <div class="btn btn-navbar btn-outline-light ml-1" style="width:130px; visibility: hidden" id="signout_button" onclick="handleSignoutClick()">Odhlásiť sa</div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #GOOGLE_MODAL>
+    <div class="modal-dialog modal-lg" style="z-index: 99999; width: 650px; display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Google Drive</h4>
+                    <a (click)="isGoogleOn()"><b>X</b></a>
+                </div>
+                <div class="modal-body">
+                    <iframe id="kok" src="https://googledriveembedder.collegefam.com/?key=AIzaSyDQLFpF7WtUN_Dx173TtE0fEAzd0btxCPw&folderid=1SxVrcLyNbiWKDirtF7FMVHDBr0NaBKH4"
+                            width="100%;" height="500px"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="isGoogleOn()">Zavrieť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

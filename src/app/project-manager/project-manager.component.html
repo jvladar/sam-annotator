@@ -1,0 +1,76 @@
+
+<div ngbDropdown #myProjectDrop="ngbDropdown" display="dynamic" placement="bottom" class="d-inline-block">
+    <button class="btn btn-navbar btn-outline-light" ngbDropdownToggle>Projekty</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic3" style="width: 280px" class="bg-dark manual-anot">
+
+        <div class="row" ngbDropdown #projectDrop="ngbDropdown" display="dynamic" placement="bottom">
+            <button class="btn btn-outline-light" style="width: 240px; text-align: center; margin: auto; margin-bottom: 5px" ngbDropdownToggle>Pridať projekt</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic30" style="overflow:auto; height: 60px;" class="bg-dark p-2">
+                <input type="text" #projectname>
+                <button class="btn btn-edit-save ml-2" (click)="saveNewProject(); projectDrop.close()">Uložiť</button>
+            </div>
+        </div>
+
+        <div class="row" *ngFor="let project of environment.project index as i" style="margin: auto">
+            <button class="btn btn-project ml-2" type="button"
+                    [ngStyle]="{'text-decoration': this.currentProject === project.name ? 'underline' : 'none',
+                    'background-color': this.currentProject === project.name ? '#5fa4ed' : 'white',
+                    'font-weight': this.currentProject === project.name ? '600' : '400'}"
+                    (click)="setProject(i); myProjectDrop.close()"
+            >{{project.name}}</button>
+
+            <div style="margin-left: 2rem" *ngIf="this.currentProject === project.name">
+                <div ngbDropdown #projectEditDrop="ngbDropdown" display="dynamic" placement="bottom" class="d-inline-block mr-1 ml-1">
+                    <button class="btn btn-edit-save" ngbDropdownToggle><i class="fa fa-edit"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic30" style="overflow:auto; max-height: 300px;" class="bg-dark">
+                        <input type="text" #editname>
+                        <button class="btn btn-edit-save" (click)="editProject(i); projectEditDrop.close()">Uložiť</button>
+                    </div>
+                </div>
+
+                <button class="d-inline-block btn btn-edit-save" style="padding: 6px 11px"
+                        (click)="deleteProjectType(i)"> <i class="fa fa-trash"></i> </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--<div ngbDropdown #myProjectDrop="ngbDropdown" *ngIf="compactDropDownMenu" [autoClose]="false" display="dynamic" placement="bottom" class="d-inline-block">
+    <button class="btn btn-outline-light btn-navbar" id="dropdownBasic30" ngbDropdownToggle>Projekty</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic30" style="overflow:auto; max-height: 600px;" class="bg-dark">
+        <div class="row" ngbDropdown #projectDrop="ngbDropdown" display="dynamic" placement="bottom">
+            <button class="btn btn-outline-light" style="width: 240px; text-align: center; margin: auto; margin-bottom: 5px" ngbDropdownToggle>Pridať projekt</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic30" style="overflow:auto; height: 50px;" class="bg-dark">
+                <input type="text" #projectname>
+                <button (click)="saveNewLayer(); projectDrop.close()">Uložiť</button>
+            </div>
+        </div>
+
+        <div class="row" *ngFor="let project of environment.project index as i" style="width: 310px; margin: auto">
+            <button class="btn btn-dark ml-2 color-button" type="button"
+                    [ngStyle]="{'text-decoration': this.maskSvc.currentProject === project.name ? 'underline' : 'none',
+                    'font-weight': this.maskSvc.currentProject === project.name ? '700' : '400'}"
+                    (click)="setProject(i); myProjectDrop.close()"
+            >{{project.name}}</button>
+
+            <div class="ml-4">
+                <div ngbDropdown #colorDrop="ngbDropdown" display="dynamic" placement="bottom" class="d-inline-block mr-1 ml-1">
+                    <button class="btn btn-edit-save" ngbDropdownToggle>Edit</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic30" style="overflow:auto; max-height: 300px;" class="bg-dark">
+                        <input type="text" id="tako1" [(ngModel)]="project[i].name">
+                        <button class="btn btn-edit-save" (click)="editLayerType(); colorDrop.close()">Uložiť</button>
+                    </div>
+                </div>
+
+                <button class="d-inline-block btn btn-edit-save" style="margin-bottom: 5px"
+                        (click)="deleteLayerType(i)">X</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!compactDropDownMenu">
+    <button  *ngFor="let project of environment.project index as i" class="btn btn-dark ml-2" type="button"
+             (click)="setProject(i)">
+        {{project.name}}</button>
+</div>-->

@@ -1,0 +1,19 @@
+.btn-edit-save {
+    color: white;
+    background: #55a6d3;
+    padding: 6px 5px;
+}
+
+.btn-project {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 140px;
+    margin-bottom: 5px
+}
+
+.layers-navbar {
+    font-size: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

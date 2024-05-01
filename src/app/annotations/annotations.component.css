@@ -1,0 +1,41 @@
+.dropdown-export {
+    color: white;
+    border: 1px solid #5fa4ed;
+    border-radius: 5px;
+    margin: 5px 5px;
+    text-align: center;
+}
+
+.dpd-layers {
+    width: auto;
+    min-width: unset;
+    text-align: center;
+    overflow: scroll;
+}
+
+.layer-menu-btn {
+    background-color: white;
+    color: black;
+    padding: 2px 8px;
+    height: 40px;
+}
+
+.btn-color {
+    width: 80%;
+    overflow: hidden;
+    font-size: 14px;
+    margin: 3px;
+}
+
+.selected-layer {
+    background-color: #55a6d3 !important;
+}
+
+.dp-mh{
+    min-height: 285px;
+}
+
+.zoznam-vrstiev {
+    background-color: white;
+    text-align: center;
+}

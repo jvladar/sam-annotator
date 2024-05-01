@@ -1,0 +1,47 @@
+<div ngbDropdown #myDrop="ngbDropdown" *ngIf="compactDropDownMenu" display="dynamic" placement="bottom" class="d-inline-block">
+    <button class="btn btn-outline-light layers-navbar" id="dropdownBasic3" ngbDropdownToggle
+      [ngStyle]="{'width': '140px', 'background-color': 'white', 'color': 'black'}">Triedy</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic3" style="overflow:auto; max-height: 600px;" class="bg-dark">
+        <div class="row">
+            <button class="btn" [ngClass]="this.layerClassTrueFalse ? 'btn-outline-danger' : 'btn-outline-success'"  style="width: 240px; text-align: center; margin: auto; margin-bottom: 5px" (click)="fixLayerType()">Vyberať triedu manuálne</button>
+        </div>
+        <div class="row" ngbDropdown #colorDrop="ngbDropdown" display="dynamic" placement="bottom">
+            <button class="btn btn-outline-light" style="width: 240px; text-align: center; margin: auto; margin-bottom: 5px" ngbDropdownToggle>Pridať triedu</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic3" style="overflow:auto; height: 60px;" class="bg-dark p-2">
+                <input type="color" class="color-picker" name="hi" id="s" #toolbarcolor/>
+                <input type="text" #layername>
+                <button class="btn btn-edit-save ml-2" (click)="saveNewLayer(); colorDrop.close()">Uložiť</button>
+            </div>
+        </div>
+
+        <div class="row" *ngFor="let color of colors index as i" style="width: 280px; margin: auto">
+            <button class="btn btn-dark ml-2 color-button" type="button"
+                    [ngStyle]="{ 'border-color': color.color, 'background-color': color.color,
+                    'font-weight': this.maskSvc.currentColor.color === color.color ? '700' : '400'}"
+                    (click)="setColor(i); myDrop.close()"
+            >{{ this.maskSvc.currentColor.color === color.color? '• ' : '' }}{{color.name}}</button>
+
+            <div style="margin-left: 2rem">
+                <div ngbDropdown #colorDrop="ngbDropdown" display="dynamic" placement="bottom" class="d-inline-block mr-1 ml-1">
+                    <button class="btn btn-edit-save" ngbDropdownToggle><i class="fa fa-edit"></i></button>
+
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic3" style="overflow:auto; max-height: 300px;" class="bg-dark">
+                        <input type="color" #editcolor/>
+                        <input type="text" #editname>
+                        <button class="btn btn-edit-save" (click)="editLayerType(i); colorDrop.close()">Uložiť</button>
+                    </div>
+                </div>
+
+                <button class="d-inline-block btn btn-edit-save" style="padding: 6px 11px"
+                   (click)="deleteLayerType(i)"> <i class="fa fa-trash"></i> </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!compactDropDownMenu">
+<button  *ngFor="let color of colors index as i" class="btn btn-dark ml-2" type="button"
+ [ngStyle]="{'border-color': color.color, 'background-color': color.color, 'text-decoration': this.maskSvc.currentColor.color === color.color ? 'underline' : 'none'}"
+  (click)="setColor(i)">
+ {{color.name}}</button>
+</div>
