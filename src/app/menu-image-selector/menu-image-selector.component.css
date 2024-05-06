@@ -1,0 +1,7 @@
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    display: none;
+}
+
+.custom-file {
+    text-align: center;
+}

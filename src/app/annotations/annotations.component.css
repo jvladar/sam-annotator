@@ -1,9 +1,21 @@
 .dropdown-export {
     color: white;
     border: 1px solid #5fa4ed;
+    background-color: transparent;
     border-radius: 5px;
     margin: 5px 5px;
     text-align: center;
+    cursor: pointer;
+    &:hover {
+        background-color: #5fa4ed;
+    }
+}
+
+.dropdown-item {
+    cursor: pointer;
+    &:hover {
+        background-color: #5fa4ed;
+    }
 }
 
 .dpd-layers {

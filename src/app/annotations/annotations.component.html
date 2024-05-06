@@ -1,5 +1,5 @@
-<div [ngClass]="{'ml-2 mr-2 dp-mh': dropdownOn}" class="ml-2 mr-2" style="overflow-x: scroll; max-height: 85vh">
-    <div *ngIf="dropdownOn" style="max-width: 100%">
+<div [ngClass]="{'ml-2 mr-2 dp-mh': dropdownOn}" class="ml-2 mr-2" [style.height]="dropdownOn ? 'auto' : '85vh'" style="overflow-x: scroll">
+    <div *ngIf="dropdownOn" style="max-width: 100%; height: auto">
         <div class="d-flex justify-content-around mb-2">
             <div class="input-group d-flex" style="width: 185px">
                 <div class="input-group-prepend" style="height: 40px">
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div *ngIf="layers">
+    <div *ngIf="layers" class="height: 85vh">
         <table *ngIf="dropdownOn; else PANELMENU" class="table table-striped table-dark">
             <thead>
                 <tr>
@@ -79,7 +79,7 @@
                     <th scope="col">Trieda</th>
                     <th scope="col">Dopredu</th>
                     <th scope="col">Dozadu</th>
-                    <th scope="col">Skryť&nbsp;/ zobraziť</th>
+                    <th scope="col">Skryť&nbsp;/ Zobraziť</th>
                     <th scope="col">Vymazať</th>
                 </tr>
             </thead>
