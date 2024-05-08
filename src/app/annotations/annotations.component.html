@@ -87,7 +87,7 @@
                 <tr *ngFor="let layer of layers">
                     <th>{{layer.index}}</th>
                     <th>
-                        <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="top-left">
+                        <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="bottom">
                             <button class="btn btn-outline-light" id="dropdownBasic3" ngbDropdownToggle
                               [ngStyle]="{'width': '150px', 'border-color': getLayerType(layer.type).color, 'background-color': getLayerType(layer.type).color}"
                             >{{getLayerType(layer.type).name}}</button>
@@ -127,7 +127,7 @@
                         [ngClass]="{'selected-layer': layer.index == selectedLayer}">
                         <th>{{i+1}}</th>
                         <th>
-                            <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="bottom">
+                            <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false" display="dynamic" placement="bottom" style="text-align: center">
                                 <button class="btn btn-outline-light layer-btn" id="dropdownPanel" ngbDropdownToggle
                                         [ngStyle]="{'border-color': getLayerType(layer.type).color, 'background-color': getLayerType(layer.type).color}">
                                     <span style="text-overflow: ellipsis">{{getLayerType(layer.type).name}}</span>

@@ -16,8 +16,7 @@ export class MenuBarComponent {
   @ViewChild('layername') layername;
 
 
-  constructor(private maskSvc: MaskingService,
-              private router: Router) { }
+  constructor(private maskSvc: MaskingService) { }
 
   public changeRectangleMode(){
     this.rectMode = true;

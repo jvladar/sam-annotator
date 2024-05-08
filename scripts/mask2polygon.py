@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import imutils
 
 def is_clockwise(contour):
     value = 0
@@ -87,7 +86,7 @@ def mask2polygon(image, multiple = False):
             continue
         contours_parent_tmp.append(contour)
 
-    h, w = image.shape
+    # h, w = image.shape
     # line_width = int((h + w) * 0.4 * 0.003)
     # cv2.drawContours(image, contours_parent_tmp, -1, 128, line_width)
     # transformacia nazad do RGB nech viem zobrazit na FE, musim mergnut najprv images, potom vymazat
@@ -98,7 +97,6 @@ def mask2polygon(image, multiple = False):
     for contour in contours_parent_tmp:
         polygon = contour.flatten().tolist()
         polygons.append(polygon)
-
 
     print(polygons)
 

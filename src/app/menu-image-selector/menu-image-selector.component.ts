@@ -18,19 +18,12 @@ export class MenuImageSelectorComponent implements OnInit{
   rectangleModeOn = false;
 
   constructor(private maskSvc: MaskingService,
-              private activatedRoute: ActivatedRoute,
               private idGenerator: UnigueIdGeneratorService) { }
 
   ngOnInit(): void {
     this.maskSvc.getImageFileDatas().subscribe(urlsData => {
       this.imageFileDatas = urlsData;
     });
-  }
-
-  public showMask(url?: string): void {
-    if (url) {
-      this.maskSvc.setMaskUrl(url);
-    }
   }
 
   public updateImage(): void {

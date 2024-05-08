@@ -28,7 +28,6 @@ import {CategoryCoco} from "../models/coco/categoryCoco";
 import {Annotation} from "../models/annotation";
 import {AnnotationCoco} from "../models/coco/annotationCoco";
 import {DatePipe} from "@angular/common";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 declare const getImagesMap: (...args: any[]) => Map<string, string>;
 
@@ -113,18 +112,9 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
                 private activatedRoute: ActivatedRoute,
                 private maskSvc: MaskingService,
                 private idGenerator: UnigueIdGeneratorService,
-                private datePipe: DatePipe,
-                private router: Router) { }
+                private datePipe: DatePipe) { }
 
     ngOnInit(): void {
-        const storage = Object.entries(localStorage);
-        for (const item of storage) {
-            if (item[0].includes('github')) {
-                item[0] = item[0].match(/[\w-]+\.(png|jpg)/)[0].substring(0, 4);
-                this.localStorage.push(item);
-            }
-        }
-
         this.projectName = environment.project[0].name;
         this.projectIndex = environment.project.findIndex(e => e.name === this.projectName);
 
@@ -433,9 +423,8 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
         document.getElementById("signout_button").style.visibility = "visible";
         let a = document.getElementById("image") as HTMLImageElement;
         let imagesMap: Map<string, string> = getImagesMap();
-        let loadedImagesCount = 0; // Counter for loaded images
-        let totalImages = imagesMap.size; // Total number of images
-        let imageFileDatas: ImageFileDatas[] = []; // Array to hold processed image data
+        let loadedImagesCount = 0;
+        let totalImages = imagesMap.size;
 
         imagesMap.forEach((value, key) => {
             let imageFile: ImageFileDatas = new ImageFileDatas();
@@ -446,19 +435,14 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
                 imageFile.height = image.height / image.width * 1000;
                 imageFile.projectName = this.projectName;
                 imageFile.id = this.idGenerator.generateUniqueId();
-
-                // Add image file data to the array
                 imageFile.data = value;
                 imageFile.name = key;
-                imageFileDatas.push(imageFile);
-
-                // Increment loaded images count
+                this.imageFileDatas.push(imageFile);
                 loadedImagesCount++;
 
                 // Check if all images are loaded
                 if (loadedImagesCount === totalImages) {
-                    // All images are loaded, call setImageFileDatas
-                    this.maskSvc.setImageFileDatas(imageFileDatas);
+                    this.maskSvc.setImageFileDatas(this.imageFileDatas);
                 }
             };
         });

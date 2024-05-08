@@ -1,10 +1,11 @@
 import io
-import matplotlib.pyplot as plt
 import cv2
 import base64
 import numpy as np
 import imutils
 from PIL import Image, ImageDraw
+
+# Funkcie na prekreslenie masiek na obrázok
 
 def show_mask(mask):
     color = np.array([30/255, 144/255, 255/255, 0.6])

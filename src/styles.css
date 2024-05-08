@@ -57,7 +57,8 @@ svg{
 
 .layer-btn {
     overflow: hidden;
-    width: 85px;
+    min-width: 85px;
+    width: auto;
     padding: 3px;
 }
 

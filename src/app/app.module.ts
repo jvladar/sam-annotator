@@ -12,7 +12,6 @@ import { MenuColorSelectorComponent } from './menu-color-selector/menu-color-sel
 import { MenuImageSelectorComponent } from './menu-image-selector/menu-image-selector.component';
 import { AnnotationsComponent } from './annotations/annotations.component';
 import {FormsModule} from "@angular/forms";
-import {SamComponent} from './sam/sam.component';
 import {DatePipe} from "@angular/common";
 import { MymodalComponent } from './mymodal/mymodal.component';
 import { ProjectManagerComponent } from './project-manager/project-manager.component';
@@ -27,7 +26,6 @@ import { ProjectManagerComponent } from './project-manager/project-manager.compo
     MenuColorSelectorComponent,
     MenuImageSelectorComponent,
     AnnotationsComponent,
-    SamComponent,
     MymodalComponent,
     ProjectManagerComponent
   ],

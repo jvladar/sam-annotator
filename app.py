@@ -1,11 +1,9 @@
 from flask import Flask, request
-from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO
 import os
 import scripts.utils
 from scripts.image_predictor import SamImagePredictor
 from scripts.image_multiple_predictor import SamMultiImagePredictor
-from scripts.utils import show_image
 
 main_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -66,22 +64,5 @@ def set_image(event):
     socketio.emit('show_image', True)
 
 
-@socketio.on('get_image')
-def get_image():
-    global image_index
-    image_path = images[image_index]
-    image_index = (image_index + 1) % len(images)
-    sam.set_image(image_path)
-    samMulti.set_image(image_path)
-
-    img_data = show_image(sam.image)
-
-    socketio.emit('show_image', img_data)
-
-
 if __name__ == '__main__':
     socketio.run(app)
-
-
-# set FLASK_APP = app.py
-# flask run
