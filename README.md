@@ -2,8 +2,7 @@
 ### Návod na inštaláciu a spustenie aplikácie.
 #### Spustenie backe-endovej časti aplikácie
 - Stiahnutie SAM modelu:
-Stiahnuť si SAM model z nasledujúceho odkazu a stiahnutý súbor následne presunúť do projektu, do priečinku models:
-[sam_vit_h.pth](https://dl.fbaipublicfiles.com/segment\_anything/sam\_vit\_h\_4b8939.pth).
+Stiahnuť si SAM model z nasledujúceho odkazu [sam_vit_h.pth](https://dl.fbaipublicfiles.com/segment\_anything/sam\_vit\_h\_4b8939.pth) a stiahnutý súbor následne presunúť do projektu, do priečinku models.
 - Inštalácia potrebných knižníc:
 Otvorte príkazový riadok a presuňte sa do priečinku kde sa nachádza aplikácia a zadajte príkaz:
 ```
